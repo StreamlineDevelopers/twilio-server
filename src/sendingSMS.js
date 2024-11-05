@@ -11,7 +11,7 @@ const client = twilio(accountSid, authToken);
 client.messages
   .create({
     body: "Hello from Twilio!",
-    to: "+639165935661",
+    to: "",
     from: phoneNumber
   })
   .then((message) => console.log(message.sid))
