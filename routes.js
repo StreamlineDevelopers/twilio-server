@@ -1,5 +1,7 @@
 import TwilioManager from "./src/TwilioManager.js";
 import TwilioCredential from "./models/TwilioCredentialSchema.js";
+import axios from "axios";
+import "dotenv/config";
 
 const routes = (app) => {
     // Middleware to fetch and set Twilio credentials for the user
@@ -158,6 +160,19 @@ const routes = (app) => {
             console.error("Error fetching subaccounts:", error);
             res.status(500).json({ error: "Failed to fetch subaccounts." });
         }
+    });
+
+    app.route("/receive-sms").post((req, res) => {
+        // replace with you own email
+        axios
+            .post(`${process.env.FRONTEND_URL}/receive-sms`, req.body)
+            .then((response) => {
+                console.log("Email sent to server:", response.data.message);
+            })
+            .catch((error) => {
+                console.error("Error sending email to server:", error);
+            });
+        res.json({ status: "success" });
     });
 };
 
